@@ -2,3 +2,5 @@
 .env
 __pycache__/
 .DS_Store
+job_search_tracker.xlsx
+Luca_Job_Search_Tracker.xlsx

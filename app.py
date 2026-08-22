@@ -27,8 +27,8 @@ I built it because my spreadsheet was good at storing information, but not at te
 # --------------------------------------------------
 
 default_paths = [
-    Path("Luca_Job_Search_Tracker.xlsx"),
-    Path("../Luca_Job_Search_Tracker.xlsx"),
+    Path("job_search_tracker.xlsx"),
+    Path("../job_search_tracker.xlsx"),
 ]
 
 local_file = next((p for p in default_paths if p.exists()), None)
@@ -48,8 +48,8 @@ elif local_file:
     source_name = str(local_file)
 else:
     st.error(
-        "I can't find Luca_Job_Search_Tracker.xlsx. "
-        "Put it in your Downloads folder or upload it from the sidebar."
+        "I can't find job_search_tracker.xlsx. "
+        "Put job_search_tracker.xlsx next to the app or upload an Excel tracker from the sidebar."
     )
     st.stop()
 
