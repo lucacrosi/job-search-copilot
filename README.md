@@ -1,43 +1,86 @@
-# Job Follow-up Agent
+# Job Search Copilot
 
-A small personal AI tool I built to make my own job search less chaotic.
+A small tool I built to help manage my own job search.
 
-It keeps applications in one place, calculates which ones are due for a follow-up, and can use Claude to draft a short follow-up based on the company, role, status and my notes.
+I was already tracking applications in Excel, but after a few days I realised the spreadsheet was good at storing information and not very good at answering a more useful question:
 
-## Why I built it
+**What should I actually do today?**
 
-When I started applying seriously after finishing university, I noticed that the annoying part was not finding jobs — it was remembering who I had contacted, when I should follow up, and what context mattered for each conversation.
-
-I wanted something simple enough that I would actually use it, so I built this instead of using a large CRM.
+So I built a small layer on top of it.
 
 ## What it does
 
-- Imports a CSV of applications
-- Keeps the tracker editable in the browser
-- Scores follow-up urgency using simple, transparent rules
-- Creates a follow-up queue
-- Uses Claude to draft a concise message using the context I saved
-- Exports the updated tracker back to CSV
+The Excel file stays the source of truth for applications, contacts and dates.
 
-## Run locally
+The app reads that pipeline and:
+
+* shows the applications that need attention
+* identifies overdue or scheduled actions
+* prioritises them based on timing and application priority
+* distinguishes between applications, follow-ups, networking and interview preparation
+* builds a context-specific prompt that I can use with Claude for the next step
+
+For example, a follow-up produces a prompt for a short recruiter message, while an application task produces a checklist of what still needs to be completed.
+
+## Why I built it this way
+
+My first version tried to replace the spreadsheet entirely.
+
+After using it, I realised that made little sense. Excel was already better at editing and storing the data.
+
+The useful part was everything that happened **after** the data was stored: deciding what needed attention and preparing the next action.
+
+So I kept Excel as the simple database and turned the app into a lightweight job-search copilot instead.
+
+## How I use it
+
+My tracker contains information such as:
+
+* company and role
+* location
+* application priority
+* current status
+* application date
+* contact person
+* last interaction
+* next action and deadline
+* notes and previous context
+
+I update the spreadsheet as I apply and speak with people.
+
+When I open the app, it turns that information into a daily action queue.
+
+## Built with
+
+* Python
+* Streamlit
+* Pandas
+* OpenPyXL
+* Claude for AI-assisted next steps
+
+I also used AI extensively while building and iterating on the project itself. The goal was not to write every line manually, but to see how quickly I could go from a real annoyance to something I could actually use.
+
+## Running it locally
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY="your-key-here"
 streamlit run app.py
 ```
 
-The tracker still works without an API key; only AI message drafting is disabled.
+The app expects an Excel workbook with a sheet called `Applications`.
 
-## Input format
+My actual job-search tracker is intentionally not included in the repository because it contains personal information and recruiter contacts.
 
-See `sample_applications.csv`.
+## What I would improve next
 
-## What I would add next
+If I keep using it, the next things I would probably add are:
 
-- Gmail/LinkedIn reminders
-- Automatic extraction of company and role information from a job URL
-- A weekly summary of applications that need attention
-- Better prioritisation based on role quality and relationship strength
+* automatically importing basic information from a job posting
+* a better way to track multiple contacts at the same company
+* weekly statistics on applications and interview conversion
+* optional direct LLM integration instead of manually copying the generated prompt
+* reminders for actions that become overdue
+
+This is deliberately a small project. I built it because I had the problem myself, and I wanted something useful quickly rather than a much bigger system I would never actually use.
