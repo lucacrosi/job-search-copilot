@@ -29,6 +29,7 @@ I built it because my spreadsheet was good at storing information, but not at te
 default_paths = [
     Path("job_search_tracker.xlsx"),
     Path("../job_search_tracker.xlsx"),
+    Path("sample_tracker.xlsx"),
 ]
 
 local_file = next((p for p in default_paths if p.exists()), None)
